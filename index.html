@@ -26,6 +26,9 @@
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, canvas.width, canvas.height); //x and y = margin; h and w = size
         
+        // Update state
+        x+= 10*dt; // 10 px/s
+
         // Draw elements
         ctx.fillStyle = "white";
         ctx.fillRect(x, 150, 20, 20);
