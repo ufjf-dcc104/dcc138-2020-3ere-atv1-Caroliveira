@@ -15,6 +15,7 @@
       canvas.width = 480;
       canvas.height = 320;
       let x = 100;
+      let y = 100;
       let t0;
       let dt;
       requestAnimationFrame(draw);
@@ -28,10 +29,11 @@
         
         // Update state
         x+= 10*dt; // 10 px/s
+        y = 100 + 500*Math.cos(t/200)*dt;
 
         // Draw elements
         ctx.fillStyle = "white";
-        ctx.fillRect(x, 150, 20, 20);
+        ctx.fillRect(x, y, 20, 20);
 
         requestAnimationFrame(draw);
         t0 = t;
