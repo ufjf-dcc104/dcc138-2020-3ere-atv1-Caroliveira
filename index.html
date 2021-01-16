@@ -14,7 +14,7 @@
       let ctx = canvas.getContext("2d");
       canvas.width = 480;
       canvas.height = 320;
-      let x = 100;
+      let x = 150;
       let y = 100;
       let t0;
       let dt;
@@ -29,7 +29,7 @@
         
         // Update state
         x+= 10*dt; // 10 px/s
-        y = 100 + 500*Math.cos(t/200)*dt;
+        y = 100 + 1500*Math.cos(t/200)*dt;
 
         // Draw elements
         ctx.fillStyle = "white";
