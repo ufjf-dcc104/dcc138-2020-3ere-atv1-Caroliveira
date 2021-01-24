@@ -42,6 +42,7 @@
       }
 
       addEventListener("keydown", keyPressed);
+      addEventListener("keyup", keyNotPressed);
 
       function keyPressed(evt) {
         // Add speed control
@@ -49,25 +50,32 @@
         switch (evt.key) {
           case "ArrowUp":
             vy = -20;
-            vx = 0;
             break;
           case "ArrowDown":
             vy = 20;
-            vx = 0;
             break;
           case "ArrowLeft":
             vx = -20;
-            vy = 0;
             break;
           case "ArrowRight":
             vx = 20;
+            break;
+        }
+      }
+      function keyNotPressed(evt) {
+        console.log(evt)
+        switch (evt.key) {
+          case "ArrowUp":
             vy = 0;
             break;
-          case " ":
+          case "ArrowDown":
             vy = 0;
+            break;
+          case "ArrowLeft":
             vx = 0;
             break;
-          default:
+          case "ArrowRight":
+            vx = 0;
             break;
         }
       }
