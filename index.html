@@ -15,10 +15,9 @@
       canvas.width = 480;
       canvas.height = 320;
       let x = 150;
+      let vx = 0;
       let y = 100;
-      let size = 20;
-      let count = 0;
-      let forward = true;
+      let vy = 0;
       let t0;
       let dt;
       requestAnimationFrame(draw);
@@ -30,24 +29,47 @@
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, canvas.width, canvas.height); //x and y = margin; h and w = size
 
-        // Update state
-        if (x > canvas.width) {
-            forward = false;
-            size ++;
-        } else if (x < 0) {
-            forward = true;
-            size ++;
-        }
-        forward ? count++ : count--;
-        x = count + 1500 * Math.sin(t / 200) * dt;
-        y = 100 + 1500 * Math.cos(t / 200) * dt;
+        // Update state dynamic
+        x = x + vx * dt;
+        y = y + vy * dt;
 
         // Draw elements
         ctx.fillStyle = "white";
-        ctx.fillRect(x, y, size, size);
+        ctx.fillRect(x, y, 20, 20);
 
         requestAnimationFrame(draw);
         t0 = t;
+      }
+
+      addEventListener("keydown", keyPressed);
+
+      function keyPressed(evt) {
+        // Add speed control
+        console.log(evt)
+        switch (evt.key) {
+          case "ArrowUp":
+            vy = -20;
+            vx = 0;
+            break;
+          case "ArrowDown":
+            vy = 20;
+            vx = 0;
+            break;
+          case "ArrowLeft":
+            vx = -20;
+            vy = 0;
+            break;
+          case "ArrowRight":
+            vx = 20;
+            vy = 0;
+            break;
+          case " ":
+            vy = 0;
+            vx = 0;
+            break;
+          default:
+            break;
+        }
       }
     </script>
   </body>
