@@ -16,9 +16,11 @@
       canvas.height = 320;
       let x = 150;
       let vx = 0;
+      let ax = 0;
       let y = 100;
       let vy = 0;
-      const speed = 100;
+      let ay = 0;
+      const acceleration = 100;
       let t0;
       let dt;
       requestAnimationFrame(draw);
@@ -31,8 +33,10 @@
         ctx.fillRect(0, 0, canvas.width, canvas.height); //x and y = margin; h and w = size
 
         // Update state dynamic
-        x = x + vx * dt;
-        y = y + vy * dt;
+        vx += ax * dt
+        x += + vx * dt;
+        vy += ay * dt
+        y += + vy * dt;
 
         // Draw elements
         ctx.fillStyle = "white";
@@ -46,20 +50,20 @@
       addEventListener("keyup", keyNotPressed);
 
       function keyPressed(evt) {
-        // Add speed control
+        // Add acceleration control
         console.log(evt)
         switch (evt.key) {
           case "ArrowUp":
-            vy = -speed;
+            ay = -acceleration;
             break;
           case "ArrowDown":
-            vy = speed;
+            ay = acceleration;
             break;
           case "ArrowLeft":
-            vx = -speed;
+            ax = -acceleration;
             break;
           case "ArrowRight":
-            vx = speed;
+            ax = acceleration;
             break;
         }
       }
@@ -68,15 +72,19 @@
         switch (evt.key) {
           case "ArrowUp":
             vy = 0;
+            ay = 0;
             break;
           case "ArrowDown":
             vy = 0;
+            ay = 0;
             break;
           case "ArrowLeft":
             vx = 0;
+            ax = 0;
             break;
           case "ArrowRight":
             vx = 0;
+            ax = 0;
             break;
         }
       }
