@@ -37,6 +37,7 @@
         color: "red",
         draw: drawElement,
         move: moveElement,
+        chase: chaseElement,
       };
 
       const acceleration = 180;
@@ -52,8 +53,7 @@
         ctx.fillRect(0, 0, canvas.width, canvas.height); //x and y = margin; h and w = size
 
         // Controllers
-        enemy.ax = 0.5 * (main.x - enemy.x) - 0.2 * enemy.vx;
-        enemy.ay = 0.5 * (main.y - enemy.y) - 0.2 * enemy.vy;
+        enemy.chase(main);
 
         // Update state dynamic
         main.move();
@@ -77,6 +77,16 @@
       function drawElement() {
         ctx.fillStyle = this.color;
         ctx.fillRect(this.x, this.y, 20, 20);
+      }
+
+      function chaseElement(target) {
+        this.ax = 0.5 * (target.x - this.x) - 0.2 * this.vx;
+        this.ay = 0.5 * (target.y - this.y) - 0.2 * this.vy;
+      }
+
+      function runFromElement(target) {
+        this.ax = -0.5 * (target.x - this.x) - 0.2 * this.vx;
+        this.ay = -0.5 * (target.y - this.y) - 0.2 * this.vy;
       }
 
       addEventListener("keydown", keyPressed);
