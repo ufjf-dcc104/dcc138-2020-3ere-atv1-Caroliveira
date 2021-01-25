@@ -28,7 +28,7 @@
         move: moveElement,
       };
 
-      const enemies = [];
+      const elements = [];
       for (let ne = 0; ne < 20; ne++) {
         let e = {
           x: canvas.width * (1 + 10 * Math.random()),
@@ -42,7 +42,7 @@
           move: moveElement,
           control: chaseElement,
         };
-        enemies.push(e);
+        elements.push(e);
       }
 
       let o = {
@@ -63,7 +63,7 @@
           }
         },
       };
-      enemies.push(o);
+      elements.push(o);
 
       const acceleration = 180;
       let t0;
@@ -80,8 +80,8 @@
         main.move();
         main.draw();
 
-        for (let ne = 0; ne < enemies.length; ne++) {
-          const e = enemies[ne];
+        for (let ne = 0; ne < elements.length; ne++) {
+          const e = elements[ne];
           // Controllers
           e.control?.(main);
           // Update state dynamic
