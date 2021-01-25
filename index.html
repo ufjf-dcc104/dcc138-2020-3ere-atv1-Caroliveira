@@ -15,22 +15,30 @@
       canvas.width = 480;
       canvas.height = 320;
 
-      let whiteBlock = {
+      let main = {
         x: 150,
         vx: 0,
         ax: 0,
         y: 100,
         vy: 0,
         ay: 0,
+        draw: function () {
+          ctx.fillStyle = "white";
+          ctx.fillRect(this.x, this.y, 20, 20);
+        },
       };
 
-      let yellowBlock = {
+      let enemy = {
         x: 300,
         vx: 0,
         ax: 0,
         y: 200,
         vy: 0,
         ay: 0,
+        draw: function () {
+          ctx.fillStyle = "red";
+          ctx.fillRect(this.x, this.y, 20, 20);
+        },
       };
 
       const acceleration = 180;
@@ -46,26 +54,23 @@
         ctx.fillRect(0, 0, canvas.width, canvas.height); //x and y = margin; h and w = size
 
         // Controllers
-        yellowBlock.ax = 0.5 * (whiteBlock.x - yellowBlock.x) - 0.2 * yellowBlock.vx;
-        yellowBlock.ay = 0.5 * (whiteBlock.y - yellowBlock.y) - 0.2 * yellowBlock.vy;
+        enemy.ax = 0.5 * (main.x - enemy.x) - 0.2 * enemy.vx;
+        enemy.ay = 0.5 * (main.y - enemy.y) - 0.2 * enemy.vy;
 
         // Update state dynamic
-        whiteBlock.vx += whiteBlock.ax * dt;
-        whiteBlock.x += whiteBlock.vx * dt;
-        whiteBlock.vy += whiteBlock.ay * dt;
-        whiteBlock.y += whiteBlock.vy * dt;
+        main.vx += main.ax * dt;
+        main.x += main.vx * dt;
+        main.vy += main.ay * dt;
+        main.y += main.vy * dt;
 
-        yellowBlock.vx += yellowBlock.ax * dt;
-        yellowBlock.x += yellowBlock.vx * dt;
-        yellowBlock.vy += yellowBlock.ay * dt;
-        yellowBlock.y += yellowBlock.vy * dt;
+        enemy.vx += enemy.ax * dt;
+        enemy.x += enemy.vx * dt;
+        enemy.vy += enemy.ay * dt;
+        enemy.y += enemy.vy * dt;
 
         // Draw elements
-        ctx.fillStyle = "white";
-        ctx.fillRect(whiteBlock.x, whiteBlock.y, 20, 20);
-
-        ctx.fillStyle = "yellow";
-        ctx.fillRect(yellowBlock.x, yellowBlock.y, 20, 20);
+        main.draw();
+        enemy.draw();
 
         requestAnimationFrame(draw);
         t0 = t;
@@ -79,16 +84,16 @@
         console.log(evt);
         switch (evt.key) {
           case "ArrowUp":
-            whiteBlock.ay = -acceleration;
+            main.ay = -acceleration;
             break;
           case "ArrowDown":
-            whiteBlock.ay = acceleration;
+            main.ay = acceleration;
             break;
           case "ArrowLeft":
-            whiteBlock.ax = -acceleration;
+            main.ax = -acceleration;
             break;
           case "ArrowRight":
-            whiteBlock.ax = acceleration;
+            main.ax = acceleration;
             break;
         }
       }
@@ -96,20 +101,16 @@
         console.log(evt);
         switch (evt.key) {
           case "ArrowUp":
-            whiteBlock.vy = 0;
-            whiteBlock.ay = 0;
+            main.ay = 0;
             break;
           case "ArrowDown":
-            whiteBlock.vy = 0;
-            whiteBlock.ay = 0;
+            main.ay = 0;
             break;
           case "ArrowLeft":
-            whiteBlock.vx = 0;
-            whiteBlock.ax = 0;
+            main.ax = 0;
             break;
           case "ArrowRight":
-            whiteBlock.vx = 0;
-            whiteBlock.ax = 0;
+            main.ax = 0;
             break;
         }
       }
