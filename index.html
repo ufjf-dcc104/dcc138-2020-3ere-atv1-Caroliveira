@@ -22,10 +22,9 @@
         y: 100,
         vy: 0,
         ay: 0,
-        draw: function () {
-          ctx.fillStyle = "white";
-          ctx.fillRect(this.x, this.y, 20, 20);
-        },
+        color: "white",
+        draw: drawElement,
+        move: moveElement,
       };
 
       let enemy = {
@@ -35,10 +34,9 @@
         y: 200,
         vy: 0,
         ay: 0,
-        draw: function () {
-          ctx.fillStyle = "red";
-          ctx.fillRect(this.x, this.y, 20, 20);
-        },
+        color: "red",
+        draw: drawElement,
+        move: moveElement,
       };
 
       const acceleration = 180;
@@ -58,15 +56,8 @@
         enemy.ay = 0.5 * (main.y - enemy.y) - 0.2 * enemy.vy;
 
         // Update state dynamic
-        main.vx += main.ax * dt;
-        main.x += main.vx * dt;
-        main.vy += main.ay * dt;
-        main.y += main.vy * dt;
-
-        enemy.vx += enemy.ax * dt;
-        enemy.x += enemy.vx * dt;
-        enemy.vy += enemy.ay * dt;
-        enemy.y += enemy.vy * dt;
+        main.move();
+        enemy.move();
 
         // Draw elements
         main.draw();
@@ -74,6 +65,18 @@
 
         requestAnimationFrame(draw);
         t0 = t;
+      }
+
+      function moveElement() {
+        this.vx += this.ax * dt;
+        this.x += this.vx * dt;
+        this.vy += this.ay * dt;
+        this.y += this.vy * dt;
+      }
+
+      function drawElement() {
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x, this.y, 20, 20);
       }
 
       addEventListener("keydown", keyPressed);
