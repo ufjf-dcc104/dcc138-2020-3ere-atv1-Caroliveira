@@ -14,6 +14,7 @@
       let ctx = canvas.getContext("2d");
       canvas.width = 480;
       canvas.height = 320;
+      let points = 0;
 
       let main = {
         x: 150,
@@ -30,7 +31,7 @@
       const enemies = [];
       for (let ne = 0; ne < 20; ne++) {
         let e = {
-          x: canvas.width * (1 + 10*Math.random()),
+          x: canvas.width * (1 + 10 * Math.random()),
           vx: -500,
           ax: 0,
           y: canvas.height * Math.random(),
@@ -87,7 +88,28 @@
           e.move?.();
           // Draw elements
           e.draw();
+
+          if (o !== e && crash(o, e)) {
+            o.x = -1000;
+            o.y = -1000;
+            o.vx = 0;
+            o.ax = 0;
+            e.x = 1000;
+            e.vx = 100;
+            e.ax = 0;
+            points++;
+          }
+
+          if (o !== e && crash(main, e)) {
+            e.x = 1000;
+            e.vx = 100;
+            e.ax = 0;
+            points -= 3;
+          }
         }
+        ctx.fillStyle = "yellow";
+        ctx.font = "20px Impact"
+        ctx.fillText(points, 10, 25);
 
         requestAnimationFrame(draw);
         t0 = t;
@@ -120,7 +142,6 @@
 
       function keyPressed(evt) {
         // Add acceleration control
-        console.log(evt);
         switch (evt.key) {
           case "ArrowUp":
             main.ay = -acceleration;
@@ -137,7 +158,6 @@
         }
       }
       function keyNotPressed(evt) {
-        console.log(evt);
         switch (evt.key) {
           case "ArrowUp":
             main.ay = 0;
@@ -161,6 +181,16 @@
             break;
         }
       }
+
+      function crash(a, b) {
+        //AABB - Axis-Alined Bouding Box
+        return !(
+          a.x > b.x + 20 ||
+          a.x + 20 < b.x ||
+          a.y > b.y + 20 ||
+          a.y + 20 < b.y
+        );
+      }
     </script>
-  </body> 
+  </body>
 </html>
