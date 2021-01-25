@@ -14,19 +14,24 @@
       let ctx = canvas.getContext("2d");
       canvas.width = 480;
       canvas.height = 320;
-      let x = 150;
-      let vx = 0;
-      let ax = 0;
-      let y = 100;
-      let vy = 0;
-      let ay = 0;
 
-      let ex = 300;
-      let evx = 0;
-      let eax = 0;
-      let ey = 200;
-      let evy = 0;
-      let eay = 0;
+      let whiteBlock = {
+        x: 150,
+        vx: 0,
+        ax: 0,
+        y: 100,
+        vy: 0,
+        ay: 0,
+      };
+
+      let yellowBlock = {
+        x: 300,
+        vx: 0,
+        ax: 0,
+        y: 200,
+        vy: 0,
+        ay: 0,
+      };
 
       const acceleration = 180;
       let t0;
@@ -41,26 +46,26 @@
         ctx.fillRect(0, 0, canvas.width, canvas.height); //x and y = margin; h and w = size
 
         // Controllers
-        eax = 0.5 * (x - ex) - 0.2 * evx;
-        eay = 0.5 * (y - ey) - 0.2 * evy;
+        yellowBlock.ax = 0.5 * (whiteBlock.x - yellowBlock.x) - 0.2 * yellowBlock.vx;
+        yellowBlock.ay = 0.5 * (whiteBlock.y - yellowBlock.y) - 0.2 * yellowBlock.vy;
 
         // Update state dynamic
-        vx += ax * dt;
-        x += vx * dt;
-        vy += ay * dt;
-        y += vy * dt;
+        whiteBlock.vx += whiteBlock.ax * dt;
+        whiteBlock.x += whiteBlock.vx * dt;
+        whiteBlock.vy += whiteBlock.ay * dt;
+        whiteBlock.y += whiteBlock.vy * dt;
 
-        evx += eax * dt;
-        ex += evx * dt;
-        evy += eay * dt;
-        ey += evy * dt;
+        yellowBlock.vx += yellowBlock.ax * dt;
+        yellowBlock.x += yellowBlock.vx * dt;
+        yellowBlock.vy += yellowBlock.ay * dt;
+        yellowBlock.y += yellowBlock.vy * dt;
 
         // Draw elements
         ctx.fillStyle = "white";
-        ctx.fillRect(x, y, 20, 20);
+        ctx.fillRect(whiteBlock.x, whiteBlock.y, 20, 20);
 
         ctx.fillStyle = "yellow";
-        ctx.fillRect(ex, ey, 20, 20);
+        ctx.fillRect(yellowBlock.x, yellowBlock.y, 20, 20);
 
         requestAnimationFrame(draw);
         t0 = t;
@@ -74,16 +79,16 @@
         console.log(evt);
         switch (evt.key) {
           case "ArrowUp":
-            ay = -acceleration;
+            whiteBlock.ay = -acceleration;
             break;
           case "ArrowDown":
-            ay = acceleration;
+            whiteBlock.ay = acceleration;
             break;
           case "ArrowLeft":
-            ax = -acceleration;
+            whiteBlock.ax = -acceleration;
             break;
           case "ArrowRight":
-            ax = acceleration;
+            whiteBlock.ax = acceleration;
             break;
         }
       }
@@ -91,20 +96,20 @@
         console.log(evt);
         switch (evt.key) {
           case "ArrowUp":
-            vy = 0;
-            ay = 0;
+            whiteBlock.vy = 0;
+            whiteBlock.ay = 0;
             break;
           case "ArrowDown":
-            vy = 0;
-            ay = 0;
+            whiteBlock.vy = 0;
+            whiteBlock.ay = 0;
             break;
           case "ArrowLeft":
-            vx = 0;
-            ax = 0;
+            whiteBlock.vx = 0;
+            whiteBlock.ax = 0;
             break;
           case "ArrowRight":
-            vx = 0;
-            ax = 0;
+            whiteBlock.vx = 0;
+            whiteBlock.ax = 0;
             break;
         }
       }
