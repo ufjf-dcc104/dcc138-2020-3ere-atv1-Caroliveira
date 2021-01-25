@@ -39,10 +39,30 @@
           color: "red",
           draw: drawElement,
           move: moveElement,
-          chase: chaseElement,
+          control: chaseElement,
         };
         enemies.push(e);
       }
+
+      let o = {
+        x: -1000,
+        vx: 0,
+        ax: 0,
+        y: 150,
+        vy: 0,
+        ay: 0,
+        color: "blue",
+        draw: drawElement,
+        move: moveElement,
+        control: function () {
+          if (this.x > canvas.width + 50) {
+            this.x = -1000;
+            this.vx = 0;
+            this.ax = 0;
+          }
+        },
+      };
+      enemies.push(o);
 
       const acceleration = 180;
       let t0;
@@ -60,11 +80,11 @@
         main.draw();
 
         for (let ne = 0; ne < enemies.length; ne++) {
-          const e = enemies[ne]
+          const e = enemies[ne];
           // Controllers
-          e.chase(main);
+          e.control?.(main);
           // Update state dynamic
-          e.move();
+          e.move?.();
           // Draw elements
           e.draw();
         }
@@ -131,8 +151,16 @@
           case "ArrowRight":
             main.ax = 0;
             break;
+          case " ":
+            if (o.x === -1000) {
+              o.x = main.x;
+              o.y = main.y;
+              o.vx = 200;
+              o.ax = 100;
+            }
+            break;
         }
       }
     </script>
-  </body>
+  </body> 
 </html>
