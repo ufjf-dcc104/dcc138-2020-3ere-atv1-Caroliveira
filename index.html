@@ -27,18 +27,22 @@
         move: moveElement,
       };
 
-      let enemy = {
-        x: 300,
-        vx: 0,
-        ax: 0,
-        y: 200,
-        vy: 0,
-        ay: 0,
-        color: "red",
-        draw: drawElement,
-        move: moveElement,
-        chase: chaseElement,
-      };
+      const enemies = [];
+      for (let ne = 0; ne < 20; ne++) {
+        let e = {
+          x: canvas.width * Math.random(),
+          vx: 0,
+          ax: 0,
+          y: canvas.height * Math.random(),
+          vy: 0,
+          ay: 0,
+          color: "red",
+          draw: drawElement,
+          move: moveElement,
+          chase: chaseElement,
+        };
+        enemies.push(e);
+      }
 
       const acceleration = 180;
       let t0;
@@ -52,16 +56,18 @@
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, canvas.width, canvas.height); //x and y = margin; h and w = size
 
-        // Controllers
-        enemy.chase(main);
-
-        // Update state dynamic
         main.move();
-        enemy.move();
-
-        // Draw elements
         main.draw();
-        enemy.draw();
+
+        for (let ne = 0; ne < enemies.length; ne++) {
+          const e = enemies[ne]
+          // Controllers
+          e.chase(main);
+          // Update state dynamic
+          e.move();
+          // Draw elements
+          e.draw();
+        }
 
         requestAnimationFrame(draw);
         t0 = t;
