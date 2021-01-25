@@ -23,6 +23,8 @@
         y: 100,
         vy: 0,
         ay: 0,
+        w: 40,
+        h: 15,
         color: "white",
         draw: drawElement,
         move: moveElement,
@@ -37,6 +39,8 @@
           y: canvas.height * Math.random(),
           vy: 0,
           ay: 0,
+          w: 15,
+          h: 15,
           color: "red",
           draw: drawElement,
           move: moveElement,
@@ -52,6 +56,8 @@
         y: 150,
         vy: 0,
         ay: 0,
+        w: 5,
+        h: 5,
         color: "blue",
         draw: drawElement,
         move: moveElement,
@@ -78,7 +84,6 @@
         ctx.fillRect(0, 0, canvas.width, canvas.height); //x and y = margin; h and w = size
 
         main.move();
-        main.draw();
 
         for (let ne = 0; ne < elements.length; ne++) {
           const e = elements[ne];
@@ -107,8 +112,10 @@
             points -= 3;
           }
         }
+        main.draw();
+
         ctx.fillStyle = "yellow";
-        ctx.font = "20px Impact"
+        ctx.font = "20px Impact";
         ctx.fillText(points, 10, 25);
 
         requestAnimationFrame(draw);
@@ -124,7 +131,7 @@
 
       function drawElement() {
         ctx.fillStyle = this.color;
-        ctx.fillRect(this.x, this.y, 20, 20);
+        ctx.fillRect(this.x, this.y, this.w, this.h);
       }
 
       function chaseElement(target) {
@@ -185,10 +192,10 @@
       function crash(a, b) {
         //AABB - Axis-Alined Bouding Box
         return !(
-          a.x > b.x + 20 ||
-          a.x + 20 < b.x ||
-          a.y > b.y + 20 ||
-          a.y + 20 < b.y
+          a.x > b.x + b.w ||
+          a.x + a.w < b.x ||
+          a.y > b.y + b.h ||
+          a.y + a.h < b.y
         );
       }
     </script>
